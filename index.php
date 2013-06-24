@@ -118,6 +118,16 @@
 	<div class="slide" id="examples2">
 		<div class="container">
 			<h2>Facebook</h2>
+			<?php
+				$app_id = "315418841926178";
+				$app_secret = "0fd2479a3a321527f49c713e9cca8d60"; 
+				$my_url = "https://nameless-temple-5077.herokuapp.com/";
+
+		
+				?>
+
+		    <h3>Public profile of Lebron James</h3>
+		    <img src="https://graph.facebook.com/LeBron/picture">
 		</div>
 	</div>
 
