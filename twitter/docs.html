@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Twitter Timeline</title>
+	<meta name="author" content="Liviu Cerchez" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	<link rel="stylesheet" href="assets-docs/css/bronto.css" media="all" />
+	<link rel="stylesheet" href="assets-docs/css/site.css" media="all" />
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" href="assets-docs/css/ie.css" type="text/css" media="screen" />
+		<script src="assets-docs/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div id="wrapper-top" class="container">
+		<div class="row clearfix">
+			<div class="grid_12">
+				<h1>Twitter <strong>Timeline</strong></h1>
+			</div>
+		</div>
+	</div>
+	<div id="wrapper-content" class="container">
+		<div id="intro" class="row clearfix">
+			<div class="grid_12 last">
+				<h2>Thank you for your purchase</h2>
+				<p>If you have any questions that are beyond the scope of this help file, please feel free to email via my user page <a href="http://codecanyon.net/user/liviu_cerchez" class="button small">contact</a> form. Thanks so much!</p>
+			</div>
+		</div>
+
+		<div id="install" class="row clearfix">
+			<div class="grid_12 last">
+				<h2>Required Files</h2>
+				<p>The main required file is <strong>twitterAPI.php</strong>, this is the library that gets the timeline statuses from Twitter and optionally caches them localy. The vertical timeline requires all the files in the <strong>css</strong>, <strong>images</strong> folders, too. On top of that, the horizontal timeline uses JavaScript thus requiring all the files in the <strong>js</strong> folder, too. If you'd like to obtain just the text version of the statuses you can use only the <strong>twitterAPI.php</strong> library and discard the other files.</p>
+				<h2>Markup</h2>
+				<p>After you copied the files to your project (locally or by FTP), include the <strong>twitterAPI.php</strong> (with the require function) and initialize the library - follow one of the examples for the exact markup and style as in the demo. Here is an example of initializing the library and getting only the text version of the tweets:</p>
+<pre>&lt;?php
+  require("twitterAPI.php");
+  $twitterAPI = new TwitterFeed();
+  $twitterAPI->->init('liviucerchez',20); <em>// parameters explained below</em>
+  $tweets = $twitterAPI->getTweets();
+  <em>// the part below is an example of getting the text version of the tweets</em>
+  foreach($tweets as $tweet) :
+    echo $tweet->text . "&lt;br/&gt;";
+  endforeach;
+?&gt;</pre>
+				<h2>Vertical timeline installation</h2>
+				<p>The vertical timeline chould be displayed using the following suggested code <em>(please see the source code of this file for a more detailed version)</em>:</p>
+<pre>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/twitter-timeline.css&quot; media="all" /&gt; <em>// place it in the &lt;head&gt; part</em></pre>
+
+<pre>&lt;ul class="twitter-timeline twitter-timeline-vertical clearfix"&gt;
+&lt;?php foreach($tweets as $tweet) : ?&gt;
+  &lt;li&gt;
+    &lt;p class="tweet clearfix"&gt;
+      &lt;a href="https://twitter.com/&lt;?php echo $tweet->user->screen_name; ?&gt;" class="avatar"&gt;
+        &lt;img src="&lt;?php echo $tweet->user->profile_image_url; ?&gt;" alt="" /&gt;
+      &lt;/a&gt;
+      &lt;strong class="name"&gt;&lt;?php echo $tweet->user->name; ?&gt;&lt;/strong&gt; 
+      &lt;?php echo $tweet->html; ?&gt;
+      &lt;br /&gt;
+      &lt;span class="date"&gt;&lt;?php echo $tweet->updated; ?&gt;&lt;/span&gt;
+    &lt;/p&gt;
+  &lt;/li&gt;
+&lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
+</pre>
+				<h2>Horizontal timeline installation</h2>
+				<p>The horizontal timeline has a similar structure. Please make sure you include the JavaScript in order for this carousel timeline to work properly.</p>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.twitterslide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  $(function(){
+    $('.twitter-timeline-horizontal').twitterslide({
+      imageW   : 328,
+      minItems : 1,
+      margin   : 15
+    });
+  });
+&lt;/script&gt;
+</pre>
+<pre>&lt;div class="twitter-timeline twitter-timeline-horizontal clearfix"&gt;
+  &lt;div class="ts-carousel"&gt;
+    &lt;ul&gt;
+      <em>// same code for &lt;li&gt; elements from the vertical timeline example</em>
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+			</div>
+		</div>
+		<div id="config" class="row clearfix">
+			<div class="grid_12 last">
+				<h2>Configuration</h2>
+				<p>Twitter Timeline can be customized easily once initialized like this:</p>
+<pre>&lt;?php
+  require("twitterAPI.php");
+  $API = new TwitterFeed();
+?&gt;</pre>
+				<table class="large">
+					<thead>
+						<tr>
+							<th>Function</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>$API->init($user,$limit,$retweets,$replies);</strong></td>
+							<td>Obtains the timeline for the current user (caches it if cache file enabled)<br />
+								$user - Twitter username (required)<br />
+								$limit - Number of tweets to fetch (optional, default: 6)<br />
+								$retweets - Determine if retweets should be included in the timeline (optional, default: TRUE)<br />
+								$replies - Determine if replies should be included in the timeline (optional, default: FALSE)
+							</td>
+						</tr>
+						<tr>
+							<td><strong>$API->initlist($user,$list,$limit,$retweets,$replies);</strong></td>
+							<td>Obtains the timeline of a user's list (caches it if cache file enabled)<br />
+								$user - Twitter username (required)<br />
+								$list - List slug name (required)<br />
+								$limit - Number of tweets to fetch (optional, default: 6)<br />
+								$retweets - Determine if retweets should be included in the timeline (optional, default: TRUE)<br />
+								$replies - Determine if replies should be included in the timeline (optional, default: FALSE)
+							</td>
+						</tr>
+						<tr>
+							<td><strong>$API->getTweets();</strong></td>
+							<td>Returns the tweets after initialization. More details about the results parameters can be found <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline" target="_blank">here</a>.</td>
+						</tr>
+						<tr>
+							<td><strong>$API->setCachingOptions($file,$lifetime);</strong></td>
+							<td>Sets the cache file and lifetime in seconds of the cached timeline. <em>Defaults: "cache/%s.json" and 600</em></td>
+						</tr>
+						<tr>
+							<td><strong>$API->setCachingDirectory($path);</strong></td>
+							<td>Sets the relative path of the cache file. <em>Default: null - current directory</em></td>
+						</tr>
+						<tr>
+							<td><strong>$API->enableCaching($enabled);</strong></td>
+							<td>Determine if caching system is enabled. <em>Default: true</em></td>
+						</tr>
+						<tr>
+							<td><strong>$API->clearCache();</strong></td>
+							<td>Clears cache if it exists.</td>
+						</tr>
+						<tr>
+							<td><strong>$API->time_since($date);</strong></td>
+							<td>Returns a twitter style date <em>(ex: 3 minutes ago)</em>.</td>
+						</tr>
+						<tr>
+							<td><strong>$API->statusUrlConverter($text);</strong></td>
+							<td>Returns a html status with generated links for profiles and hashtags.</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3">Make sure you check out the twitterAPI.php and the examples.</td>
+						</tr>
+					</tfoot>
+				</table>
+				<p>The horizontal timeline can be customized by passing the following options in JavaScript:</p>
+<pre>$('.twitter-timeline-horizontal').twitterslide({
+  <em>// options placed here</em>
+});
+</pre>
+				<table class="large">
+					<thead>
+						<tr>
+							<th>Option</th>
+							<th>Default</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>slideWidth</strong></td>
+							<td><em>220 (required)</em></td>
+							<td>Sets the width of each slide/tweet.</td>
+						</tr>
+						<tr>
+							<td><strong>speed</strong></td>
+							<td><em>300</em></td>
+							<td>Sets the animation speed when sliding to next page of timeline (in miliseconds).</td>
+						</tr>
+						<tr>
+							<td><strong>easing</strong></td>
+							<td><em>-</em></td>
+							<td>Sets the animation easing effect used when sliding to next page of timeline.</td>
+						</tr>
+						<tr>
+							<td><strong>margin</strong></td>
+							<td><em>5</em></td>
+							<td>Determined the margin between slides.</td>
+						</tr>
+						<tr>
+							<td><strong>minItems</strong></td>
+							<td><em>1</em></td>
+							<td>Sets the minimum number of items to show. When we resize the window, this will make sure minItems are always shown.</td>
+						</tr>
+						<tr>
+							<td><strong>current</strong></td>
+							<td><em>1</em></td>
+							<td>Sets the index of the current item. When we resize the window, the carousel will make sure this item is visible .</td>
+						</tr>
+					</tbody>
+				</table>
+				<pre><strong>Note:</strong> The library uses the <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">user_timeline</a> API function, you should check it out to see what this request is outputting.</pre>
+			</div>
+		</div>
+
+		<div id="thankyou" class="row clearfix">
+			<div class="grid_12 last">
+				<h2>Final thought</h2>
+				<p>Once again, thank you so much for purchasing this script. As I said at the beginning, I'd be glad to help you if you have any issues or concerns related to this script. No guarantees, but I'll do my best to assist.</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

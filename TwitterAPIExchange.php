@@ -20,6 +20,7 @@ class TwitterAPIExchange
     private $postfields;
     private $getfield;
     protected $oauth;
+    protected $tweets = array();
     public $url;
 
     /**
@@ -258,6 +259,65 @@ class TwitterAPIExchange
         
         $return .= implode(', ', $values);
         return $return;
+    }
+
+        public function time_since($original)
+    {
+        $chunks = array(
+            array(31536000 , 'year'), // 60 * 60 * 24 * 365
+            array(2592000 , 'month'), // 60 * 60 * 24 * 30
+            array(604800, 'week'), // 60 * 60 * 24 * 7
+            array(86400 , 'day'), // 60 * 60 * 24
+            array(3600 , 'hour'), // 60 * 60
+            array(60 , 'minute'),
+        );
+        $today = time();
+        $since = $today - $original;
+
+        // $j saves performing the count function each time around the loop
+        for ($i = 0, $j = count($chunks); $i < $j; $i++)
+        {
+            $seconds = $chunks[$i][0];
+            $name = $chunks[$i][1];
+            // finding the biggest chunk (if the chunk fits, break)
+            if (($count = floor($since / $seconds)) != 0) break;
+        }
+        $print = ($count == 1) ? "$count {$name} ago" : "$count {$name}s ago";
+        return $print;
+    }
+
+    public function statusUrlConverter($status, $targetBlank=true, $linkMaxLen=250)
+    {
+
+        $target=$targetBlank ? "target=\"_blank\"" : "";
+
+        // convert link to url
+        $status = preg_replace("/((http:\/\/|https:\/\/)[^ )]+)/e", "'<a href=\"$1\" title=\"$1\" $target>'. ((strlen('$1')>=$linkMaxLen ? substr('$1',0,$linkMaxLen).'...':'$1')).'</a>'", $status);
+
+        // convert @ to follow
+        $status = preg_replace("/(@([_a-z0-9\-]+))/i","<a href=\"http://twitter.com/$2\" title=\"Follow $2\" $target>$1</a>",$status);
+
+        // convert # to search
+        $status = preg_replace("/(#([_a-z0-9\-]+))/i","<a href=\"http://search.twitter.com/search?q=%23$2\" title=\"Search $1\" $target>$1</a>",$status);
+
+        return $status;
+    }
+
+    public function getTweets($json)
+    {
+        $result = json_decode($json);
+        if (isset($result))
+        {
+            foreach($result as $entry)
+            {
+                $entry->html = $this->statusUrlConverter($entry->text);
+                $entry->updated = $this->time_since((int) strtotime($entry->created_at));
+                array_push($this->tweets, $entry);
+            }
+            unset($result);
+        }
+        unset($feed, $json, $tweet);
+        return $this->tweets;
     }
 
 }

@@ -1,0 +1,20 @@
+
+@font-face { font-family: 'MuseoSans500'; src: url('../fonts/MuseoSans_500-webfont.eot'); src: url('../fonts/MuseoSans_500-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/MuseoSans_500-webfont.woff') format('woff'), url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'), url('../fonts/MuseoSans_500-webfont.svg#MuseoSans500') format('svg'); font-weight: normal; font-style: normal; }
+
+html { background: #f6f6f6 url(../images/grid1.png) repeat center top; }
+body { color: #000; }
+h1,h2,h3 { font-family: 'MuseoSans500'; }
+#wrapper-top { padding-top: 48px; padding-bottom: 48px; background: #222 url(../images/grid2.png) repeat center top; text-align: center; border-bottom: 2px solid #45D1FF; margin-bottom: 22px; }
+#wrapper-top h1 { font-size: 48px; line-height: 48px; margin-bottom: 0; color: #fff; }
+#wrapper-top h1 strong { color: #45D1FF; font-weight: normal; }
+#wrapper-top span { color: #999; }
+#wrapper-content h2 { font-size: 22px; }
+#wrapper-content a { font-weight: normal; }
+#wrapper-content table { margin-bottom: 24px; }
+pre { font-size: 90%; border-left: 2px solid #666; margin-left: 15px; margin-bottom: 24px; padding: 12px 5px 12px 15px; color: #333; background-color: #fff; background-color: rgba(255,255,255,0.5); white-space: pre-wrap; white-space: -moz-pre-wrap !important; white-space: -pre-wrap; white-space: -o-pre-wrap;  word-wrap: break-word; }
+pre em { color: #6a6; }
+
+/* mobile */
+@media handheld, only screen and (max-width: 480px) {
+	.container { padding-left: 10px; padding-right: 10px; }
+}
