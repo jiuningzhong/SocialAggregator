@@ -1,0 +1,175 @@
+/* Rolio.com */
+
+html, body {margin:0; padding:0; border:0; height:100%; max-height:100%;}
+body { background:url(https://rws.blob.core.windows.net/images/stream_bg.jpg) repeat-x; background-color:#F9F9F9; font-family:Helvetica,'Lucida Grande','Lucida Sans Unicode',Arial,Verdana,sans-serif; font-size:11px; color: #696969;}
+img {border:none;}
+
+/* Header */
+#header {position:fixed; margin:0; top:0; display:block; width:100%; height:50px; background-image:url(https://rws.blob.core.windows.net/images/header-bg.png); background-position:center; background-repeat:no-repeat; z-index:1;}
+#header-inner {width:840px; margin-left:auto; margin-right:auto; position:relative;}
+
+#header ul {margin:0; padding:0; background:transparent; height:100%; margin-left:0px; padding-left:0px; padding-top:11px; font-size:11px;}
+#header ul li {display:inline;}
+#header ul li a {padding-left:20px;  color:#999999; text-decoration:none;}
+#header ul li a:hover {color:#666666;}
+
+#menu {padding:7px 0px 12px; font-size:11px; line-height:23px; text-align:right;}
+#menu ul{list-style:none; list-style-image:none; margin:0; padding:0; position:relative;}
+#menu li{display:inline; float:left; padding:0px 10px 0 10px; position:relative;}
+#menu ul li:last-child {padding-right:0;}
+
+#menu a.networks {padding:15px 6px 21px 9px; text-decoration:none; color:#999; *padding:4px 12px 6px;}
+#menu a.networks:hover {*padding:4px 12px 6px;}
+#menu a.networks, #menu a.networks:hover {*background-position:0 3px!important;}
+a.networks {position:relative; margin-left:3px;}
+a.networks span {background-image:url(https://rws.blob.core.windows.net/images/down.png); background-repeat:no-repeat; background-position:100% 50%; padding:4px 16px 6px 0;}
+#menu a.menu-open {color:#666!important; outline:none; background:#F8F8F8; padding:15px 6px 21px 9px; text-decoration:none; color:#999; -moz-border-radius-topleft:4px; -moz-border-radius-topright:4px; -moz-border-radius-topleft:4px;  -moz-border-radius-topright:4px; -webkit-box-shadow:0 3px 6px rgba(0,0,0,0.15); -moz-box-shadow:0 3px 6px rgba(0,0,0,0.15); box-shadow:0 3px 6px #CCC; behavior: url(/PIE.htc);}
+#small_signup {display:inline; float:none; line-height:23px; margin:25px 0 0; width:170px;}
+a.networks.menu-open span {background-image:url(https://rws.blob.core.windows.net/images/up.png);}
+#network {-moz-border-radius-bottomleft:5px; -moz-border-radius-bottomright:5px; -webkit-border-bottom-left-radius:5px; -webkit-border-bottom-right-radius:5px;	-webkit-box-shadow:0 3px 6px rgba(0,0,0,0.15); -moz-box-shadow:0 3px 6px rgba(0,0,0,0.15); display:none; background-color:#F8F8F8; position:absolute; width:570px; z-index:100; border:1px transparent; text-align:left; padding:12px; top:50px;	right:92px; right:95px \0/; font-size:11px; box-shadow:0 3px 6px #CCC; zoom:1; filter: progid:DXImageTransform.Microsoft.Shadow(Color=#EEEEEE, Strength=3, Direction=90), progid:DXImageTransform.Microsoft.Shadow(Color=#EEEEEE, Strength=3, Direction=180), progid:DXImageTransform.Microsoft.Shadow(Color=#EEEEEE, Strength=3, Direction=270);}
+#network:not([dummy]) {filter: progid:DXImageTransform.Microsoft.Shadow(enabled='false');}
+#networks-menu {position:relative; width:570px;}
+#networks-l {float:left; width:275px; height:241px; margin:0 auto; border-right:1px solid #DADADA; padding-right:12px;}
+.signin_text {text-align:left; padding:5px 5px 15px 0;}
+.network-logo {text-align:center;}
+#networks-r {float:right; width:275px; height:241px; padding-left:5px;}
+
+#menu a.my {padding:15px 6px 21px 9px; text-decoration:none; color:#999; *padding:4px 12px 6px;}
+#menu a.my:hover {*padding:4px 12px 6px;}
+#menu a.my, #menu a.my:hover {*background-position:0 3px!important;}
+a.my {position:relative; margin-left:3px;}
+a.my span {background-image:url(https://rws.blob.core.windows.net/images/down.png); background-repeat:no-repeat; background-position:100% 50%; padding:4px 16px 6px 0;}
+#my {-moz-border-radius-bottomleft:5px; -moz-border-radius-bottomright:5px; -webkit-border-bottom-left-radius:5px; -webkit-border-bottom-right-radius:5px; -webkit-box-shadow:0 3px 6px rgba(0,0,0,0.15); -moz-box-shadow:0 3px 6px rgba(0,0,0,0.15); display:none; background-color:#F8F8F8; position:absolute; width:150px; z-index:100; border:1px transparent; text-align:left; padding:0px 12px 12px 12px; top:50px; right:-2px; *margin-right:-1px; font-size:11px; box-shadow:0 3px 6px #CCC; zoom:1; filter: progid:DXImageTransform.Microsoft.Shadow(Color=#EEEEEE, Strength=3, Direction=90),          progid:DXImageTransform.Microsoft.Shadow(Color=#EEEEEE, Strength=3, Direction=180), progid:DXImageTransform.Microsoft.Shadow(Color=#EEEEEE, Strength=3, Direction=270);}
+#my:not([dummy]) {filter: progid:DXImageTransform.Microsoft.Shadow(enabled='false');}
+#my-menu{width:150px; list-style:none; margin:0; padding:0;} 
+#my-menu a{display:block; height:30px; margin-top:1px; padding-left:10px; text-decoration:none; color:#999999; line-height:30px;} 
+#my-menu a:hover{background: #F2F2F2; color:#CCCCCC;} 
+#my-menu a.last{margin-top:0; border-top:solid 1px #F2F2F2;} 
+
+#search {float:left; height:24px;margin:11px 0 0 57px;}
+
+/*----------------------------------------  SLIDES  */
+
+.slide {
+	margin: 0 auto;
+	width: 99%;
+	padding: 120px 0;
+	padding: 12rem 0;
+	height: 40rem;
+}
+
+#title {
+	line-height: .8;
+}
+
+#author {
+	width: 75%;
+	font-size: 20px;
+	font-size: 2rem;
+	margin: 0 auto;
+	padding-bottom: 20px;
+	padding-bottom: 2rem;
+	text-align: right;
+	font-style: italic;
+}
+
+.twitter-follow-button {
+	position: relative;
+	top: 8px;
+	left: 4px;
+}
+
+#animations {
+	padding-top: 70px;
+	padding-top: 7rem;
+	height: 480px;
+	height: 48rem;
+}
+
+#examples h1 {
+	padding-bottom: 20px;
+	padding-bottom: 2rem;
+}
+
+#examples, #examples p, #credits {
+	line-height: .8;
+}
+
+#examples p {
+	padding-top: 20px;
+}
+
+#credits a {
+	padding-right: 3px;
+}
+
+/*------------------------  BASE-REM SIZING  */
+
+
+@media (min-width: 1401px) {
+	html {
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 1400px) {
+	html {
+		font-size: 11px;
+	}
+}
+
+/* target screen width  */
+@media (max-width: 1280px) {
+	html {
+		font-size: 10px;
+	}
+}
+	
+@media (max-width: 1160px) {
+	html {
+		font-size: 9px;
+	}
+}
+	
+@media (max-width: 1040px) {
+	html {
+		font-size: 8px;
+	}
+}
+	
+@media (max-width: 920px) {
+	html {
+		font-size: 7px;
+	}
+}
+	
+@media (max-width: 800px) {
+	html {
+		font-size: 6px;
+	}
+}
+	
+@media (max-width: 680px) {
+	html {
+		font-size: 5px;
+	}
+}
+	
+@media (max-width: 560px) {
+	html {
+		font-size: 4px;
+	}
+}
+	
+@media (max-width: 440px) {
+	html {
+		font-size: 3px;
+	}
+}
+
+@media (max-width: 320px) {
+	html {
+		font-size: 3px;
+	}
+}
+ 
