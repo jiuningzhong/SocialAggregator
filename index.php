@@ -39,11 +39,11 @@
 	</a>
 	
 	<div id="header">
-		<a href="#examples1" class="nav-button">Twitter</a>
-		<a href="#examples2" class="nav-button">Facebook</a>
-		<a href="#examples3" class="nav-button">Flickr</a>
-		<a href="#examples4" class="nav-button">Tumblr</a>
-		<a href="#examples5" class="nav-button">FourSquare</a>
+		<a href="#twitter" class="nav-button">Twitter</a>
+		<a href="#facebook" class="nav-button">Facebook</a>
+		<a href="#flickr" class="nav-button">Flickr</a>
+		<a href="#tumblr" class="nav-button">Tumblr</a>
+		<a href="#foursquare" class="nav-button">FourSquare</a>
 		<a href="#credits" class="nav-button">Credits</a>
 	</div>
 
@@ -62,7 +62,7 @@
 
 	</div>
 	
-	<div class="slide" id="examples1">
+	<div class="slide" id="twitter">
 		<div class="container">
 			<h2>King's Tweets</h2>
 			<?php
@@ -92,7 +92,6 @@
 
 				<div id="horizontal-example" class="row clearfix">
 					<div class="grid_12 last">
-						Vertical Timeline Example
 							<?php if(count($tweets)>0) : ?>
 											<ul class="twitter-timeline twitter-timeline-vertical clearfix">
 							<?php
@@ -115,7 +114,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="slide" id="examples2">
+	<div class="slide" id="facebook">
 		<div class="container">
 			<h2>Facebook</h2>
 			<?php
@@ -131,19 +130,108 @@
 		</div>
 	</div>
 
-		<div class="slide" id="examples3">
+		<div class="slide" id="flickr">
 		<div class="container">
 			<h2>Flickr</h2>
 		</div>
 	</div>
 
-		<div class="slide" id="examples4">
+		<div class="slide" id="tumblr">
 		<div class="container">
 			<h2>Tumblr</h2>
+			<?php
+			#
+			# ***** END LICENSE BLOCK *****
+
+			/*  Execution time counter */
+			$nStartTime = microtime(true);
+
+			/*  First, you have to include some files :
+			/     * The Clearbricks _common.php file
+			/     * The Tumblr class itself
+			/*/
+			require dirname(__FILE__).'/clearbricks/_common.php';
+			require dirname(__FILE__).'/class.read.tumblr.php';
+
+			/*  Now you can initiate the Tumblr object with the ID of the Tumblelog you want read from as param.
+			/
+			/   function __construct($sTumblrID = null,$sHTTPUserAgent = 'phpTumblr')
+			/      * Initialize the Tumblr object, take a Tumblr ID as param.
+			/      * Optionally take a second param, a string that will be the HTTP User Agent used for the requests made to the API.
+			/*/
+			$tumblr_id ='jiuningzhong';
+			$oTumblr = new readTumblr($tumblr_id);
+
+			/*  Now, it's time to do some requests from this API. This code will request, in the order:
+			/      * 3 video posts
+			/      * All regular posts
+			/      * The posts with the ID 39185133
+			/
+			/   function getPosts($nStart = 0,$mNum = 20,$sType = null,$nID = null)
+			/      * Request $mNum $sType posts starting from $nStart.
+			/      * Take posts of all types if $sType = null.
+			/
+			/   OR
+			/      * If $mNum = 'all', get all $sType posts starting from $nStart
+			/      * Take posts of all types if $sType = null.
+			/
+			/   OR
+			/      * If $nID is given, request the post with the ID $nID.
+			/*/
+			//$oTumblr->getPosts(0,3,'video');
+			//$oTumblr->getPosts(null,'all','regular');
+			$oTumblr->getPosts(null,null,null);
+
+			/*  You're quite done! Now, you can get the array that contain the result.
+			/
+			/   function dumpArray($bChrono = false,$bDebug = false)
+			/      * Sort the array in chronological order if $bChrono is true, inverse if false.
+			/      * Return the array-formated content of the requests made to the API.
+			/      * If $bDebug = true, return raw decoded JSON from the last request in ['temp'] key of the array. This option was mainly created to help me while dev.
+			/*/
+			$aTumblr = $oTumblr->dumpArray();
+
+			/*  Execution time counter */
+			$nEndTime = microtime(true);
+			$nExecTime = $nEndTime - $nStartTime;
+			if ($aTumblr['stats']['num-inarray'] > 0) { $nExecTimePerPost = $nExecTime / $aTumblr['stats']['num-inarray']; } else { $nExecTimePerPost = 0; }
+
+			//echo $aTumblr['stats']['num-inarray'].' posts parsed in '.$nExecTime.'s, that means '.$nExecTimePerPost.'s per post !'."\n\n";
+			//print_r($aTumblr);
+			$tumblrs = $aTumblr['posts'];
+
+			/*  Important note : you can do as much getPosts request as you like!
+			/   It's impossible to have several times the same post in the array (array key composed with post's id and post's timestamp).
+			/*/
+			?>
+			<div id="wrapper-content" class="container">
+
+				<div id="horizontal-example" class="row clearfix">
+					<div class="grid_12 last">
+							<?php if(count($tumblrs)>0) : ?>
+								<ul class="twitter-timeline twitter-timeline-vertical clearfix">
+							<?php
+								$count = 0;
+								foreach($tumblrs as $tumblr) :
+									$count++;
+									if ($tumblr['type']=='regular') : ?>
+								<li class="<?php if ($count%2==1) echo "odd"; else echo "even"; ?>"><p class="tweet clearfix"><a href="<?php echo $tumblr['url']; ?>" class="avatar" target="_blank"><img src="" alt="" /></a><strong class="name"><?php echo $tumblr_id; ?></strong> <?php echo strip_tags($tumblr['content']['title']); ?> <br /><?php echo strip_tags($tumblr['content']['body']); ?><span class="date"><?php echo date('Y-m-d H:i:s', $tumblr['time']); ?></span></p></li>
+							<?php	else: ?>
+								<li class="<?php if ($count%2==1) echo "odd"; else echo "even"; ?>"><p class="tweet clearfix"><a href="<?php echo $tumblr['url']; ?>" class="avatar" target="_blank"><img src="" alt="" /></a><strong class="name"><?php echo $tumblr_id; ?></strong> <?php echo strip_tags($tumblr['content']['caption'],"<br>"); ?> <br /><span class="date"><?php echo date('Y-m-d H:i:s', $tumblr['time']);; ?></span></p></li>
+							<?php	endif; ?>
+							<?php endforeach; ?>
+								<li class="more"><a href="http://<?php echo $tumblr_id; ?>.tumblr.com/" target="_blank">View More</a></li>
+								</ul>
+							<?php else: ?>
+								<p>No posts found.<a href="http://<?php echo $tumblr_id; ?>.tumblr.com/" class="profile" target="_blank">View Profile</a></p>
+							<?php endif; ?>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
-		<div class="slide" id="examples5">
+		<div class="slide" id="foursquare">
 		<div class="container">
 			<h2>Four Square</h2>
 		</div>
